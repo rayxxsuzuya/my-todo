@@ -1,5 +1,6 @@
 const $input = document.querySelector('#text');
 const $block = document.querySelector('.block');
+const $addBtn = document.querySelector('.add-btn');
 
 $input.addEventListener('keydown', addItem);
 
@@ -19,6 +20,27 @@ document.body.addEventListener('click', (el) => {
       el.target.parentElement.remove();
       toLocal();
   }
+});
+
+$addBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    let item = document.createElement('div');
+    let taskText = document.createElement('p');
+    taskText.classList.add('task-text');
+    taskText.innerHTML = $input.value;
+    item.append(taskText);
+    let taskComplete = document.createElement('button');
+    taskComplete.classList.add('fas','fa-check', 'task-complete');
+    taskComplete.addEventListener('click', completeItem);
+    item.append(taskComplete);
+    let taskDelete = document.createElement('button');
+    taskDelete.classList.add('fas','fa-trash-alt', 'task-delete');
+    taskDelete.addEventListener('click', removeItem);
+    item.append(taskDelete);
+    item.classList.add('item');
+    $block.insertAdjacentElement('beforeend', item);
+    $input.value = '';
+    toLocal();
 });
 
 function addItem(e) {
